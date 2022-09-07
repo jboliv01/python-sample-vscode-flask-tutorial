@@ -6,25 +6,24 @@
 trigger:
 - master
 
-pool:
-  vmImage: "ubuntu-latest"
-
 strategy:
   matrix:
-    Python27:
-      python.version: '2.7'
-    Python35:
-      python.version: '3.5'
-    Python36:
-      python.version: '3.6'
-    Python37:
-      python.version: '3.7'
+    linux:
+      imageName: "ubuntu-latest"
+    mac:
+      imageName: "macOS-latest"
+    windows:
+      imageName: "windows-latest"
+  maxParallel: 3
+
+pool:
+  vmImage: $(imageName)
 
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+    versionSpec: '3.7'
+  displayName: 'Use Python 3.7'
 
 - script: |
     python -m pip install --upgrade pip
@@ -42,4 +41,4 @@ steps:
     codeCoverageTool: "Cobertura"
     summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/coverage.xml"
     reportDirectory: "$(System.DefaultWorkingDirectory)/**/htmlcov"
-    failIfCoverageEmpty: true
+    failIfCoverageEmpty: false
