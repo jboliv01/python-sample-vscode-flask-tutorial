@@ -34,7 +34,7 @@ steps:
     pip install pytest pytest-azurepipelines pytest-cov
     pytest -v — junitxml=junit/test-results.xml — cov — cov-report=xml — cov-report=html
   displayName: “Pytest Unit Test with Coverage”
-  continueOnError: True
+  continueOnError: true
 
 - task: PublishCodeCoverageResults@1
   inputs:
